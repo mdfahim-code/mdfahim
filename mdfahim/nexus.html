@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#020617',
+            brand: '#d946ef'
+          },
+          fontFamily: {
+             display: ['system-ui', 'sans-serif'],
+             body: ['system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-bg text-white font-body min-h-screen relative overflow-x-hidden flex flex-col">
+  <!-- Gradient Backgrounds -->
+  <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-900/40 via-bg to-bg pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="flex justify-between items-center py-6 px-8 relative z-10">
+     <div class="flex items-center gap-3 font-display font-bold text-xl tracking-wide">
+        <div class="w-8 h-8 rounded bg-gradient-to-tr from-brand to-purple-600 flex justify-center items-center shadow-[0_0_15px_rgba(217,70,239,0.5)]">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+        NEXUS AI
+     </div>
+     <div class="bg-white/10 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur text-sm">
+        <span class="text-gray-400">Credits:</span> <span class="font-bold text-brand ml-1">12</span>
+     </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 flex flex-col items-center justify-center p-6 relative z-10 w-full max-w-4xl mx-auto">
+     <div class="w-full text-center mb-10">
+       <span class="bg-brand/20 text-brand px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-full mb-6 inline-block border border-brand/30">V2.5 Engine Enabled</span>
+       <h1 class="font-display text-4xl md:text-6xl font-black mb-4 tracking-tight drop-shadow-xl">Imagine anything.</h1>
+       <p class="text-gray-400 text-lg md:text-xl">Describe an image in natural language and watch it generate in real-time.</p>
+     </div>
+
+     <!-- Input Area -->
+     <div class="w-full bg-white/5 border border-white/10 p-2 rounded-2xl flex flex-col sm:flex-row items-center gap-2 backdrop-blur-xl shadow-2xl relative mb-12 focus-within:border-brand/50 transition-colors">
+        <input type="text" id="prompt-input" class="w-full bg-transparent border-none outline-none px-6 py-4 text-white text-lg placeholder:text-gray-600 focus:ring-0" placeholder="A futuristic city floating in the clouds at sunset, cyberpunk style..." onkeydown="if(event.key === 'Enter') generateImage(this)">
+        <button id="generate-btn" class="w-full sm:w-auto bg-gradient-to-r from-brand to-purple-600 px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] transition-all active:scale-95 cursor-pointer" onclick="generateImage()">
+           Generate
+        </button>
+     </div>
+
+     <!-- Result Area -->
+     <div id="result-area" class="w-full hidden flex-col items-center gap-6">
+        <!-- Loading State -->
+        <div id="loader" class="flex flex-col items-center justify-center py-12 gap-6 hidden">
+           <div class="relative w-16 h-16">
+              <div class="absolute inset-0 rounded-full border-4 border-white/10"></div>
+              <div class="absolute inset-0 rounded-full border-4 border-brand border-t-transparent animate-spin"></div>
+           </div>
+           <div class="text-brand font-bold uppercase tracking-widest text-sm animate-pulse">Running Neural Network...</div>
+        </div>
+
+        <!-- Result Frame -->
+        <div id="result-frame" class="w-full aspect-video rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl relative group hidden bg-gray-900 flex justify-center items-center">
+           <img id="result-img" class="w-full h-full object-cover origin-center opacity-0 transition-opacity duration-1000 ease-in-out" src="" alt="Generated image">
+           
+           <!-- Overlay UI -->
+           <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 gap-4">
+              <p id="result-prompt" class="text-white font-medium text-sm md:text-base line-clamp-2"></p>
+              <div class="flex gap-4">
+                 <button class="bg-white text-black px-6 py-2 rounded-lg font-bold text-sm hover:scale-105 transition-transform" onclick="alert('Image downloaded successfully.')">Download</button>
+                 <button class="bg-white/20 text-white backdrop-blur border border-white/30 px-6 py-2 rounded-lg font-bold text-sm hover:bg-white/30 transition-colors" onclick="alert('Variant generation initiated.')">Variations</button>
+              </div>
+           </div>
+        </div>
+     </div>
+  </main>
+
+  <script>
+    function generateImage() {
+       const input = document.getElementById('prompt-input');
+       const btn = document.getElementById('generate-btn');
+       const resultArea = document.getElementById('result-area');
+       const loader = document.getElementById('loader');
+       const frame = document.getElementById('result-frame');
+       const img = document.getElementById('result-img');
+       const promptDisplay = document.getElementById('result-prompt');
+       
+       const prompt = input.value.trim();
+       if (!prompt) return;
+
+       // Transition into generating state
+       input.disabled = true;
+       btn.disabled = true;
+       btn.innerText = 'Creating...';
+       
+       resultArea.classList.remove('hidden');
+       frame.classList.add('hidden');
+       loader.classList.remove('hidden');
+       
+       // Clean UI
+       img.classList.remove('opacity-100');
+       img.classList.add('opacity-0');
+
+       // Real AI Image Generation endpoint (Pollinations.ai is free and doesn't require API key for prototyping!)
+       const encodedPrompt = encodeURIComponent(prompt);
+       // Adding a random seed bypasses pollinations cache to ensure fresh image if same prompt is used
+       const seed = Math.floor(Math.random() * 100000);
+       const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=576&nologo=true&seed=${seed}`;
+       
+       img.onload = () => {
+         // UI Reveal
+         loader.classList.add('hidden');
+         frame.classList.remove('hidden');
+         
+         // Trigger reflow & fade in
+         void img.offsetWidth;
+         img.classList.replace('opacity-0', 'opacity-100');
+
+         // Reset Inputs
+         input.disabled = false;
+         btn.disabled = false;
+         btn.innerText = 'Generate';
+         promptDisplay.innerText = prompt;
+       };
+
+       img.onerror = () => {
+         alert("Generator is currently busy. Please try again.");
+         input.disabled = false;
+         btn.disabled = false;
+         btn.innerText = 'Generate';
+         loader.classList.add('hidden');
+       }
+
+       // Set source to trigger load
+       img.src = url;
+    }
+  </script>
+</body>
+</html>

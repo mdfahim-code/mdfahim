@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxe Estates</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { brand: '#064e3b', accent: '#a7f3d0' } } }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+  
+  <!-- Sidebar Map Placeholder -->
+  <aside class="w-full md:w-5/12 lg:w-1/2 h-64 md:h-full relative overflow-hidden hidden md:block">
+     <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover">
+     <div class="absolute inset-0 bg-brand/20 mix-blend-multiply"></div>
+     
+     <!-- Map Marker Mock -->
+     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer animate-bounce">
+       <div class="bg-white text-brand font-bold px-3 py-1 rounded-full shadow-xl">$4.2M</div>
+       <div class="w-1 h-3 bg-white"></div>
+       <div class="w-2 h-2 rounded-full bg-brand"></div>
+     </div>
+  </aside>
+
+  <!-- Content Area -->
+  <main class="flex-1 h-full flex flex-col bg-white overflow-hidden relative shadow-[-20px_0_30px_rgba(0,0,0,0.05)]">
+     <!-- Header -->
+     <header class="p-6 border-b border-gray-100 flex justify-between items-center z-10 bg-white">
+        <div class="font-serif font-black tracking-widest text-brand text-2xl uppercase">Luxe</div>
+        <div class="flex gap-4">
+           <button class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+           </button>
+           <button class="w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center cursor-pointer shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+           </button>
+        </div>
+     </header>
+
+     <!-- Search -->
+     <div class="px-6 py-4 bg-gray-50/50 border-b border-gray-100">
+        <div class="bg-white border border-gray-200 rounded-full flex items-center p-2 shadow-sm focus-within:ring-2 ring-brand/20 transition-all">
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 ml-3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+           <input type="text" class="flex-1 border-none outline-none px-4 text-sm font-medium placeholder:text-gray-400" placeholder="Search Beverly Hills, CA...">
+           <button class="bg-brand text-white px-6 py-2 rounded-full font-bold text-xs uppercase tracking-wider hover:bg-emerald-800 transition-colors">Search</button>
+        </div>
+     </div>
+
+     <!-- Filters -->
+     <div class="px-6 py-3 flex gap-2 overflow-x-auto no-scrollbar border-b border-gray-100">
+        <button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-xs font-bold hover:bg-gray-50 active:bg-gray-100 transition-colors">Any Price</button>
+        <button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-xs font-bold hover:bg-gray-50 active:bg-gray-100 transition-colors">3+ Beds</button>
+        <button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-xs font-bold hover:bg-gray-50 active:bg-gray-100 transition-colors">Villas</button>
+        <button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-gray-200 text-xs font-bold bg-gray-900 text-white selection">+ More Filters</button>
+     </div>
+
+     <!-- Listing Grid -->
+     <div class="flex-1 overflow-y-auto p-6 h-full pb-20">
+        <h2 class="font-bold text-xl mb-6">Found 24 properties</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+           
+           <!-- Property Card 1 -->
+           <div class="group cursor-pointer">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden relative mb-3">
+                 <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur p-2 rounded-full shadow-sm hover:text-red-500 transition-colors" onclick="toggleHeart(this, event)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                 </div>
+                 <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur text-white px-2 py-1 rounded text-xs font-bold">New</div>
+              </div>
+              <div class="flex justify-between items-start">
+                 <div>
+                    <h3 class="font-bold text-lg leading-tight group-hover:text-brand transition-colors">The Palisades Villa</h3>
+                    <p class="text-gray-500 text-sm">Beverly Hills, CA</p>
+                 </div>
+                 <p class="font-black text-lg text-brand">$4.2M</p>
+              </div>
+              <div class="flex gap-4 mt-2 text-sm text-gray-500">
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> 5 Beds</span>
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> 6 Baths</span>
+              </div>
+           </div>
+
+           <!-- Property Card 2 -->
+           <div class="group cursor-pointer">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden relative mb-3">
+                 <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur p-2 rounded-full shadow-sm hover:text-red-500 transition-colors" onclick="toggleHeart(this, event)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                 </div>
+              </div>
+              <div class="flex justify-between items-start">
+                 <div>
+                    <h3 class="font-bold text-lg leading-tight group-hover:text-brand transition-colors">Modern Glass Haus</h3>
+                    <p class="text-gray-500 text-sm">Hollywood Hills, CA</p>
+                 </div>
+                 <p class="font-black text-lg text-brand">$8.5M</p>
+              </div>
+              <div class="flex gap-4 mt-2 text-sm text-gray-500">
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> 4 Beds</span>
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> 5 Baths</span>
+              </div>
+           </div>
+           
+           <!-- Property Card 3 -->
+           <div class="group cursor-pointer">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden relative mb-3">
+                 <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur p-2 rounded-full shadow-sm hover:text-red-500 transition-colors" onclick="toggleHeart(this, event)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                 </div>
+              </div>
+              <div class="flex justify-between items-start">
+                 <div>
+                     <h3 class="font-bold text-lg leading-tight group-hover:text-brand transition-colors">Oceanview Estate</h3>
+                    <p class="text-gray-500 text-sm">Malibu, CA</p>
+                 </div>
+                 <p class="font-black text-lg text-brand">$12.1M</p>
+              </div>
+              <div class="flex gap-4 mt-2 text-sm text-gray-500">
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> 6 Beds</span>
+                 <span class="flex items-center gap-1 font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> 8 Baths</span>
+              </div>
+           </div>
+
+        </div>
+     </div>
+  </main>
+  
+  <style>
+     .no-scrollbar::-webkit-scrollbar { display: none; }
+     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+
+  <script>
+     function toggleHeart(btn, e) {
+        e.stopPropagation();
+        const svg = btn.querySelector('svg');
+        btn.classList.toggle('text-red-500');
+        if(btn.classList.contains('text-red-500')) {
+          svg.classList.add('fill-red-500');
+          svg.classList.remove('fill-none');
+        } else {
+          svg.classList.remove('fill-red-500');
+          svg.classList.add('fill-none');
+        }
+     }
+  </script>
+</body>
+</html>
